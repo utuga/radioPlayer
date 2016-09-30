@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.TextField;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -11,14 +13,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,8 +38,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import java.awt.Toolkit;
 
 public class Home extends JFrame {
 
@@ -86,7 +81,8 @@ public class Home extends JFrame {
 	 * Create the frame.
 	 */
 	public Home() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Home.class.getResource("/icon/icon.ico")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				Home.class.getResource("/icon/icon.ico")));
 		comboBox = new JComboBox();
 		textArea_1 = new JTextArea();
 		loadRadios();
@@ -166,8 +162,32 @@ public class Home extends JFrame {
 		JButton btnNova = new JButton("Nova");
 		btnNova.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Form f = new Form();
-				f.setVisible(true);
+
+				TextField textField1 = new TextField();
+				TextField textField2 = new TextField();
+				Object[] inputFields = { "nome", textField1, "url", textField2 };
+				int option = JOptionPane.showConfirmDialog(null, inputFields,
+						"Adicionar Nova Rádio", JOptionPane.OK_CANCEL_OPTION);
+
+				if (option == JOptionPane.OK_OPTION) {
+					if (textField1.getText().equals("")
+							|| textField2.getText().equals("")) {
+						textArea_1.setText("Valores inválidos!");
+					} else {
+						radios.add(new RadioPlay(textField1.getText(),
+								textField1.getText()));
+						// System.out.println("daos:"+textField1.getText()
+						// +"\n"+textField1.getText());
+						save = true;
+						comboBox.removeAllItems();
+						for (RadioPlay radio : radios) {
+							comboBox.addItem(radio);
+
+						}
+					}
+				} else {
+					// System.out.println("sdfsa canceled");
+				}
 
 			}
 		});
