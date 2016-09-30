@@ -38,6 +38,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class Home extends JFrame {
 
@@ -84,6 +88,21 @@ public class Home extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Home.class.getResource("/icon/icon.ico")));
 		comboBox = new JComboBox();
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (th != null) {
+
+					if (th.getState().toString() == "RUNNABLE"
+							|| th.getState().toString() == "TIMED_WAITING") {
+
+						th.stop();
+						btnOuvir.setEnabled(true);
+						textArea_1.setText("Stoped, click Play!");
+					}
+				}
+			}
+		});
+
 		textArea_1 = new JTextArea();
 		loadRadios();
 		/*
@@ -165,7 +184,7 @@ public class Home extends JFrame {
 
 				TextField textField1 = new TextField();
 				TextField textField2 = new TextField();
-				Object[] inputFields = { "nome", textField1, "url", textField2 };
+				Object[] inputFields = { "Nome", textField1, "URL", textField2 };
 				int option = JOptionPane.showConfirmDialog(null, inputFields,
 						"Adicionar Nova Rádio", JOptionPane.OK_CANCEL_OPTION);
 
