@@ -175,7 +175,7 @@ public class Home extends JFrame {
 						textArea_1.setText("Valores inválidos!");
 					} else {
 						radios.add(new RadioPlay(textField1.getText(),
-								textField1.getText()));
+								textField2.getText()));
 						// System.out.println("daos:"+textField1.getText()
 						// +"\n"+textField1.getText());
 						save = true;
